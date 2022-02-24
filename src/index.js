@@ -1,11 +1,52 @@
 import './styles/main.scss';
 
-// Create heading node
-const heading = document.createElement('h1');
-heading.textContent = 'Codezilla here!';
+const key = process.env.ACCESS_KEY;
+// eslint-disable-next-line func-names
+(async function () {
+  const response = await fetch('https://api.unsplash.com/photos', {
+    method: 'GET',
+    headers: {
+      Authorization: `Client-ID ${key}`,
+    },
+  });
+  const json = await response.json();
 
-// Append heading node to the DOM
-const app = document.querySelector('#root');
-app.append(heading);
+  const state = {
+    title: 'MVP App',
+    message: 'Welcome to our app',
+  };
 
-console.log('Interesting!');
+  // state.image = img;
+
+  const template = input => `
+    <h1>${input.title}</h1> 
+    <p>${input.message}</p>
+    <input type="search" id="mySearch" placeholder="Search" value="">
+    <ul>
+      <li>Example 1</li>
+      <li>Example 2</li>
+      <li>Example 3</li>
+    </ul>
+    <main class="container">
+        ${json
+    .map(
+      e => `
+        <div class="card"><figure class="card__image">
+          <img src="${e.urls.raw}&w=500&h=400"/>
+        </figure> </div>
+        `,
+    )
+    .join('')}
+    </main>
+  `;
+  const render = (htmlString, el) => {
+    const element = el;
+    element.innerHTML = htmlString;
+  };
+
+  window.addEventListener('statechange', () => {
+    render(template(state), document.querySelector('#root'));
+  });
+
+  window.dispatchEvent(new Event('statechange'));
+}());
