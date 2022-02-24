@@ -2,6 +2,7 @@ const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
 const CopyPlugin = require("copy-webpack-plugin");
+const { webpack } = require('webpack');
 
 
 module.exports = {
@@ -18,10 +19,12 @@ module.exports = {
     new Dotenv(),
     new CopyPlugin({
       patterns: [
-        { from: "source", to: "dest" },
-        { from: "other", to: "public" },
+        { from: "public", to: "dist" },
       ],
     }),
+    new webpack.EnvironmentPlugin([
+      'ACCESS_KEY'
+    ])
   ],
   module: {
     rules: [
