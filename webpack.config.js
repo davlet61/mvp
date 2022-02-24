@@ -23,7 +23,7 @@ module.exports = {
       ],
     }),
     new webpack.EnvironmentPlugin({
-      'process.env.ACCESS_KEY': 'API'
+      'process.env.ACCESS_KEY': 'ACCESS_KEY',
     })
   ],
   module: {
