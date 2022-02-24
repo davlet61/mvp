@@ -19,7 +19,7 @@ module.exports = {
     new Dotenv(),
     new CopyPlugin({
       patterns: [
-        { from: "public", to: "dist" },
+        { from: "public"},
       ],
     }),
     new webpack.EnvironmentPlugin([
