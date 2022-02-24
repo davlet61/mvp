@@ -3,7 +3,12 @@ import './styles/main.scss';
 const key = process.env.ACCESS_KEY;
 // eslint-disable-next-line func-names
 (async function () {
-  const response = await fetch(`https://api.unsplash.com/photos/?client_id=${key}`);
+  const response = await fetch('https://api.unsplash.com/photos', {
+    method: 'GET',
+    headers: {
+      Authorization: `Client-ID ${key}`,
+    },
+  });
   const json = await response.json();
 
   const state = {
