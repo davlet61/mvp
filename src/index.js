@@ -7,6 +7,7 @@ const key = process.env.ACCESS_KEY;
     method: 'GET',
     headers: {
       Authorization: `Client-ID ${key}`,
+      'Access-Control-Allow-Origin': '*',
     },
   });
   const json = await response.json();
