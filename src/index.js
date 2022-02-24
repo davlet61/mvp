@@ -16,6 +16,10 @@ const key = process.env.ACCESS_KEY;
     message: 'Welcome to our app',
   };
 
+
+
+  
+
   // state.image = img;
 
   const template = input => `
