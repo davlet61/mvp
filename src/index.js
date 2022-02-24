@@ -18,7 +18,7 @@ const key = process.env.ACCESS_KEY;
 
 
 
-  
+
 
   // state.image = img;
 
