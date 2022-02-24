@@ -1,5 +1,7 @@
-import path from 'path';
-import { CleanWebpackPlugin } from 'clean-webpack-plugin';
+const path = require('path');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
+
 
 module.exports = {
   mode: 'development',
@@ -10,7 +12,10 @@ module.exports = {
     path: path.resolve(__dirname, './dist'),
     filename: '[name].bundle.js',
   },
-  plugins: [new CleanWebpackPlugin(), postcssPresetEnv()],
+  plugins: [
+    new CleanWebpackPlugin(),
+    new Dotenv()
+  ],
   module: {
     rules: [
       // JavaScript
