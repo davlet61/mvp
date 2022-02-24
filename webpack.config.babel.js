@@ -2,7 +2,6 @@ import { resolve } from 'path';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import Dotenv from 'dotenv-webpack';
 import CopyPlugin from 'copy-webpack-plugin';
-import { EnvironmentPlugin } from 'webpack';
 
 export const mode = 'development';
 export const entry = {
@@ -19,9 +18,6 @@ export const plugins = [
     patterns: [
       { from: 'public' },
     ],
-  }),
-  new EnvironmentPlugin({
-    'process.env.ACCESS_KEY': 'ACCESS_KEY',
   }),
 ];
 export const module = {
