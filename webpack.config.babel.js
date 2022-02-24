@@ -2,6 +2,7 @@ import { resolve } from 'path';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import Dotenv from 'dotenv-webpack';
 import CopyPlugin from 'copy-webpack-plugin';
+import { DefinePlugin } from 'webpack';
 
 export const mode = 'development';
 export const entry = {
@@ -19,6 +20,7 @@ export const plugins = [
       { from: 'public' },
     ],
   }),
+  new DefinePlugin(['ACCESS_KEY']),
 ];
 export const module = {
   rules: [
