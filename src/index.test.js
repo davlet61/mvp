@@ -2,7 +2,10 @@ const jsdom = require('jsdom');
 const index = require('./index');
 
 const { JSDOM } = jsdom;
-test('Test for message', () => {
+
+beforeEach(() => index());
+
+test('Test for message', async () => {
   const dom = new JSDOM(
     index.template({
       title: 'MVP App',

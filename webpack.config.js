@@ -22,9 +22,9 @@ module.exports = {
         { from: "public"},
       ],
     }),
-    new webpack.EnvironmentPlugin([
-      'ACCESS_KEY'
-    ])
+    new webpack.EnvironmentPlugin({
+      'process.env.ACCESS_KEY': 'API'
+    })
   ],
   module: {
     rules: [

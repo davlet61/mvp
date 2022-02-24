@@ -1,4 +1,4 @@
- html {
+ * {
   box-sizing: border-box;
  }
 
@@ -18,7 +18,7 @@
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.202);
   border: 1px solid #dddddd;
   border-radius: 0.15rem;
-  background-color: blue;
+  background-color: whitesmoke;
 }
 
 .card__image {
