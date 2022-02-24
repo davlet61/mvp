@@ -3,20 +3,21 @@ import './styles/main.scss';
 const key = process.env.ACCESS_KEY;
 
 const fetchImg = async () => {
-  const response = await fetch('https://api.unsplash.com/photos', {
-    method: 'GET',
-    headers: {
-      Authorization: `Client-ID ${key}`,
-    },
-  });
-  const json = await response.json();
+  try {
+    const response = await fetch('https://api.unsplash.com/photos', {
+      method: 'GET',
+      headers: {
+        Authorization: `Client-ID ${key}`,
+      },
+    });
+    const json = await response.json();
 
-  const state = {
-    title: 'MVP App',
-    message: 'Welcome to our app',
-  };
+    const state = {
+      title: 'MVP App',
+      message: 'Welcome to our app',
+    };
 
-  const template = input => `
+    const template = input => `
     <h1>${input.title}</h1> 
     <p>${input.message}</p>
     <input type="search" id="mySearch" placeholder="Search" value="">
@@ -37,16 +38,21 @@ const fetchImg = async () => {
     .join('')}
     </main>
   `;
-  const render = (htmlString, el) => {
-    const element = el;
-    element.innerHTML = htmlString;
-  };
+    const render = (htmlString, el) => {
+      const element = el;
+      element.innerHTML = htmlString;
+    };
 
-  window.addEventListener('statechange', () => {
-    render(template(state), document.querySelector('#root'));
-  });
+    window.addEventListener('statechange', () => {
+      render(template(state), document.querySelector('#root'));
+    });
 
-  window.dispatchEvent(new Event('statechange'));
+    return window.dispatchEvent(new Event('statechange'));
+  } catch (error) {
+    return error.message;
+  }
 };
 
 fetchImg();
+
+export default fetchImg;

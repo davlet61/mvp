@@ -1,9 +1,6 @@
 version: 0.2
 
 phases:
-  env:
-    parameter-store:
-      ACCESS_KEY: UNSPLASH_KEY
   install:
     commands:
       - echo Installing Node 12...
@@ -13,6 +10,9 @@ phases:
     commands:
       - echo Installing dependencies...
       - npm install
+  env:
+    parameter-store:
+      ACCESS_KEY: UNSPLASH_KEY
   build:
     commands:
       - echo Building...
