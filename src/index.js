@@ -1,8 +1,8 @@
 import './styles/main.scss';
 
 const key = process.env.ACCESS_KEY;
-// eslint-disable-next-line func-names
-(async function () {
+
+const fetchImg = async () => {
   const response = await fetch('https://api.unsplash.com/photos', {
     method: 'GET',
     headers: {
@@ -47,4 +47,6 @@ const key = process.env.ACCESS_KEY;
   });
 
   window.dispatchEvent(new Event('statechange'));
-}());
+};
+
+fetchImg();
