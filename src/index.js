@@ -1,48 +1,52 @@
 import './styles/main.scss';
 
-// const key = 'ZG50vWxj2bSDo1o47w2gD59Oh0FsKuSnspv7-vKCWJo';
 const key = process.env.ACCESS_KEY;
-// const handleData = (response) =>
-// response : response.data.json()
-//   response => response.json()
-//   url => url.urls
-//   result => result.regular
-const state = {
-  title: 'MVP App',
-  message: 'Welcome to our app',
-  image: 'https://images.unsplash.com/photo-1643779374880-abbc1380aaaa?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMDQ3OTB8MHwxfHJhbmRvbXx8fHx8fHx8fDE2NDU2MzM3OTg&ixlib=rb-1.2.1&q=80&w=1080',
-};
-// fetch(`https://api.unsplash.com/photos/random?client_id=${key}`)
-//   .then(res => res.json())
-//   .then(url => url.urls.regular)
-//   .then(res => {
-//     state.image = res;
-//     console.log(state.image);
-//   });
+// eslint-disable-next-line func-names
+(async function () {
+  const response = await fetch('https://api.unsplash.com/photos', {
+    method: 'GET',
+    headers: {
+      Authorization: `Client-ID ${key}`,
+    },
+  });
+  const json = await response.json();
 
-// const getData = () => {
-//   const apiKey = process.env.ACCESS_KEY;
-//   let apiUrl = `https://api.unsplash.com/photos/random?client_id=${apiKey}`;
-//   fetch(apiUrl)
-//   .then(handleData);
-// }
+  const state = {
+    title: 'MVP App',
+    message: 'Welcome to our app',
+  };
 
-const template = input => ` 
+  // state.image = img;
+
+  const template = input => `
     <h1>${input.title}</h1> 
     <p>${input.message}</p>
-    <img src=${input.image}/>
+    <input type="search" id="mySearch" placeholder="Search" value="">
+    <ul>
+      <li>Example 1</li>
+      <li>Example 2</li>
+      <li>Example 3</li>
+    </ul>
+    <main class="container">
+        ${json
+    .map(
+      e => `
+        <div class="card"><figure class="card__image">
+          <img src="${e.urls.raw}&w=500&h=400"/>
+        </figure> </div>
+        `,
+    )
+    .join('')}
+    </main>
   `;
-const render = (htmlString, el) => {
-  const element = el;
-  element.innerHTML = htmlString;
-};
+  const render = (htmlString, el) => {
+    const element = el;
+    element.innerHTML = htmlString;
+  };
 
-// const update = newState => {
-//   state = { ...state, ...newState };
-//   window.dispatchEvent(new Event('statechange'));
-// };
-window.addEventListener('statechange', () => {
-  render(template(state), document.querySelector('#root'));
-});
-// update({ message: 'Is it me you are looking for?' });
-window.dispatchEvent(new Event('statechange'));
+  window.addEventListener('statechange', () => {
+    render(template(state), document.querySelector('#root'));
+  });
+
+  window.dispatchEvent(new Event('statechange'));
+}());
