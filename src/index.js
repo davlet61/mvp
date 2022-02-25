@@ -1,10 +1,23 @@
 import './styles/main.scss';
+import template from './components/search';
 
 const key = process.env.ACCESS_KEY;
 
-const fetchImg = async () => {
+let state = {
+  title: 'MVP App',
+  message: 'Welcome to our app',
+  photos: [],
+  searchInput: '',
+};
+
+const update = newState => {
+  state = { ...state, ...newState }; // patch state, overwrite old data with new properties
+  window.dispatchEvent(new Event('statechange'));
+};
+
+const fetchImg = async keyword => {
   try {
-    const response = await fetch('https://api.unsplash.com/photos', {
+    const response = await fetch(`https://api.unsplash.com/search/photos?query=${keyword}`, {
       method: 'GET',
       headers: {
         Authorization: `Client-ID ${key}`,
@@ -12,47 +25,25 @@ const fetchImg = async () => {
     });
     const json = await response.json();
 
-    const state = {
-      title: 'MVP App',
-      message: 'Welcome to our app',
-    };
-
-    const template = input => `
-    <h1>${input.title}</h1> 
-    <p>${input.message}</p>
-    <input type="search" id="mySearch" placeholder="Search" value="">
-    <ul>
-      <li>Example 1</li>
-      <li>Example 2</li>
-      <li>Example 3</li>
-    </ul>
-    <main class="container">
-        ${json
-    .map(
-      e => `
-        <div class="card"><figure class="card__image">
-          <img src="${e.urls.raw}&w=500&h=400"/>
-        </figure> </div>
-        `,
-    )
-    .join('')}
-    </main>
-  `;
-    const render = (htmlString, el) => {
-      const element = el;
-      element.innerHTML = htmlString;
-    };
-
-    window.addEventListener('statechange', () => {
-      render(template(state), document.querySelector('#root'));
-    });
-
-    return window.dispatchEvent(new Event('statechange'));
+    return update({ photos: json.results });
   } catch (error) {
     return error.message;
   }
 };
+const render = (htmlString, el) => {
+  const element = el;
+  element.innerHTML = htmlString;
+  const myForm = document.getElementById('myForm');
+  myForm.addEventListener('submit', evt => {
+    evt.preventDefault();
+    const word = document.getElementById('mySearch');
+    const keyword = word.value;
+    // Fetch the image here'
+    fetchImg(keyword);
+  });
+};
 
-fetchImg();
-
-export default fetchImg;
+window.addEventListener('statechange', () => {
+  render(template(state), document.querySelector('#root'));
+});
+window.dispatchEvent(new Event('statechange'));
