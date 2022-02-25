@@ -20,7 +20,7 @@ export const plugins = [
       { from: 'public' },
     ],
   }),
-  new EnvironmentPlugin({ 'process.env.ACCESS_KEY': 'ACCESS_KEY' }),
+  new EnvironmentPlugin(['ACCESS_KEY']),
 ];
 export const module = {
   rules: [
