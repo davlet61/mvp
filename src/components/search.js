@@ -10,15 +10,16 @@ const template = input => `
   <li>Example 3</li>
 </ul>
 <main class="container">
-    ${input.photos[0]
-    .map(
-      e => `
+${input.photos
+    ? input.photos
+      .map(
+        e => `
     <div class="card"><figure class="card__image">
       <img src="${e.urls.raw}&w=500&h=400"/>
     </figure> </div>
     `,
-    )
-    .join('')}
+      )
+      .join('') : 'none'}
 </main>
 `;
 export default template;

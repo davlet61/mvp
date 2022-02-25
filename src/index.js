@@ -10,11 +10,6 @@ let state = {
   searchInput: '',
 };
 
-const render = (htmlString, el) => {
-  const element = el;
-  element.innerHTML = htmlString;
-};
-
 const update = newState => {
   state = { ...state, ...newState }; // patch state, overwrite old data with new properties
   window.dispatchEvent(new Event('statechange'));
@@ -35,13 +30,18 @@ const fetchImg = async keyword => {
     return error.message;
   }
 };
-const myForm = document.getElementById('myForm');
-myForm.addEventListener('submit', evt => {
-  evt.preventDefault();
-  const keyword = evt.target.value;
-  // Fetch the image here'
-  fetchImg(keyword);
-});
+const render = (htmlString, el) => {
+  const element = el;
+  element.innerHTML = htmlString;
+  const myForm = document.getElementById('myForm');
+  myForm.addEventListener('submit', evt => {
+    evt.preventDefault();
+    const word = document.getElementById('mySearch');
+    const keyword = word.value;
+    // Fetch the image here'
+    fetchImg(keyword);
+  });
+};
 
 window.addEventListener('statechange', () => {
   render(template(state), document.querySelector('#root'));
